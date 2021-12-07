@@ -17,8 +17,7 @@ object Runner {
         if (args.isNotEmpty()) {
             val day = try {
                 args[0].toInt()
-            }
-            catch (e: NumberFormatException) {
+            } catch (e: NumberFormatException) {
                 printError("Day argument must be an integer")
                 return
             }
@@ -26,17 +25,14 @@ object Runner {
             val dayClass = getAllDayClasses()?.find { dayNumber(it.simpleName) == day }
             if (dayClass != null) {
                 printDay(dayClass)
-            }
-            else {
+            } else {
                 printError("Day $day not found")
             }
-        }
-        else {
+        } else {
             val allDayClasses = getAllDayClasses()
             if (allDayClasses != null) {
                 allDayClasses.sortedBy { dayNumber(it.simpleName) }.forEach { printDay(it) }
-            }
-            else {
+            } else {
                 printError("Couldn't find day classes - make sure you're in the right directory and try building again")
             }
         }

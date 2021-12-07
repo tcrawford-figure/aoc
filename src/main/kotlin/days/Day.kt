@@ -11,4 +11,5 @@ abstract class Day(dayNumber: Int) {
     abstract fun partOne(): Any
 
     abstract fun partTwo(): Any
+    
 }
