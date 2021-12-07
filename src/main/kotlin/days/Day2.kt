@@ -2,10 +2,12 @@ package days
 
 class Day2 : Day(2) {
 
+    private val directionAndUnits = getDirectionAndUnits()
+
     override fun partOne(): Any {
         var (horizontal, depth) = Pair(0, 0)
 
-        return getDirectionAndUnits()
+        return directionAndUnits
             .forEach { (direction, units) ->
                 when (direction) {
                     "down" -> depth += units
@@ -18,7 +20,7 @@ class Day2 : Day(2) {
     override fun partTwo(): Any {
         var (horizontal, depth, aim) = listOf(0, 0, 0)
 
-        return getDirectionAndUnits()
+        return directionAndUnits
             .forEach { (direction, units) ->
                 when (direction) {
                     "down" -> aim += units
