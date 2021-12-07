@@ -3,8 +3,7 @@ package days
 class Day2 : Day(2) {
 
     override fun partOne(): Any {
-        var horizontal = 0
-        var depth = 0
+        var (horizontal, depth) = Pair(0, 0)
 
         return getDirectionAndUnits()
             .forEach { (direction, units) ->
@@ -17,9 +16,7 @@ class Day2 : Day(2) {
     }
 
     override fun partTwo(): Any {
-        var horizontal = 0
-        var depth = 0
-        var aim = 0
+        var (horizontal, depth, aim) = listOf(0, 0, 0)
 
         return getDirectionAndUnits()
             .forEach { (direction, units) ->
