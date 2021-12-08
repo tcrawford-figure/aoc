@@ -1,90 +1,44 @@
 package days
 
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
+import kotlin.math.absoluteValue
+import kotlin.math.sign
 
+// Taken with advice from: https://todd.ginsberg.com/post/advent-of-code/2021/day5/
 class Day5 : Day(5) {
 
-    private data class Point(val x: Int, val y: Int)
+    private data class Point(val x: Int, val y: Int) {
+        infix fun sharesAxisWith(that: Point): Boolean = x == that.x || y == that.y
 
-    private data class Line(val p1: Point, val p2: Point) {
-        fun pointRange(): List<Point> {
-            val points = mutableListOf<Point>()
-            val width = abs(p2.x - p1.x)
-            val height = abs(p2.y - p1.y)
+        infix fun lineTo(that: Point): List<Point> {
+            val dx = that.x - x
+            val dy = that.y - y
 
-            val xMin = min(p1.x, p2.x)
-            val yMin = min(p1.y, p2.y)
+            val dxSign = dx.sign
+            val dySign = dy.sign
 
-            val xMax = max(p1.x, p2.x)
-            val yMax = max(p1.y, p2.y)
-
-            if (width != 0) {
-                points.addAll((0..width).map { i -> Point(xMin + i, yMin) })
-            } else if (height != 0) {
-                points.addAll((0..height).map { i -> Point(xMin, yMin + i) })
-            } else {
-                for (i in xMin until xMax) {
-                    for (j in yMin until yMax) {
-                        points.add(Point(i, j))
-                    }
-                }
-            }
-            return points
+            val steps = maxOf(dx.absoluteValue, dy.absoluteValue)
+            return (1..steps).scan(this) { last, _ -> Point(last.x + dxSign, last.y + dySign) }
         }
     }
 
-    override fun partOne(): Any {
-        var max = 0
+    private val instructions = inputList.map { parseLine(it) }
 
-        val lines = inputList
-            .map { line ->
-                // Might be able to be replaced with something like line.replace(" -> ", ",").windowed(2)
-                val (xy, x1y1) = line.split(" -> ")
-                val (x, y) = xy.split(",").map { it.toInt() }
-                val (x1, y1) = x1y1.split(",").map { it.toInt() }
+    override fun partOne(): Int = solve { it.first sharesAxisWith it.second }
 
-                val subMax = listOf(x, y, x1, y1).maxOrNull()
-                if (subMax!! > max) {
-                    max = subMax
-                }
+    override fun partTwo(): Int = solve { true }
 
-                Line(Point(x, y), Point(x1, y1))
-            }.filter { it.p1.x == it.p2.x || it.p1.y == it.p2.y }
+    private fun solve(lineFilter: (Pair<Point, Point>) -> Boolean) =
+        instructions
+            .filter { lineFilter(it) }
+            .flatMap { it.first lineTo it.second }
+            .groupingBy { it }
+            .eachCount()
+            .count { it.value > 1 }
 
-        val matrix = matrixOf(max)
-        lines.forEach { line ->
-            line.pointRange().forEach { point ->
-                matrix[point.y][point.x]++
-            }
-        }
-
-        return matrix
-            .flatten()
-            .count { it > 1 }
-    }
-
-    override fun partTwo(): Any {
-        return -1
-    }
-
-    private fun matrixOf(size: Int): MutableList<MutableList<Int>> {
-        val matrix = mutableListOf<MutableList<Int>>()
-        for (i in 0..size) {
-            val row = mutableListOf<Int>()
-            for (j in 0..size) {
-                row.add(0)
-            }
-            matrix.add(row)
-        }
-        return matrix
-    }
-
-    fun printMatrix(matrix: List<List<Int>>) {
-        for (line in matrix) {
-            println(line)
-        }
-    }
+    private fun parseLine(line: String): Pair<Point, Point> =
+        Pair(
+            line.substringBefore(" ").split(",").map { it.toInt() }.let { Point(it.first(), it.last()) },
+            line.substringAfterLast(" ").split(",").map { it.toInt() }.let { Point(it.first(), it.last()) }
+        )
 
 }
