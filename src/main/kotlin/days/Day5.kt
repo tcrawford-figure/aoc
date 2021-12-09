@@ -9,6 +9,7 @@ class Day5 : Day(5) {
     private data class Point(val x: Int, val y: Int) {
         infix fun sharesAxisWith(that: Point): Boolean = x == that.x || y == that.y
 
+        // Builds list of coordinates along a line from point a to b
         infix fun lineTo(that: Point): List<Point> {
             val dx = that.x - x
             val dy = that.y - y
@@ -30,8 +31,8 @@ class Day5 : Day(5) {
     private fun solve(lineFilter: (Pair<Point, Point>) -> Boolean) =
         instructions
             .filter { lineFilter(it) }
-            .flatMap { it.first lineTo it.second }
-            .groupingBy { it }
+            .flatMap { it.first lineTo it.second } // Creates a flat list of "highlighted"/"selected" coordinates
+            .groupingBy { it } // Creates a map of coordinates associated to a count
             .eachCount()
             .count { it.value > 1 }
 
