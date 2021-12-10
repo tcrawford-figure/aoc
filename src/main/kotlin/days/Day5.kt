@@ -3,7 +3,10 @@ package days
 import kotlin.math.absoluteValue
 import kotlin.math.sign
 
-// Taken with advice from: https://todd.ginsberg.com/post/advent-of-code/2021/day5/
+/**
+ * https://adventofcode.com/2021/day/5
+ * Taken with advice from: https://todd.ginsberg.com/post/advent-of-code/2021/day5/
+ */
 class Day5 : Day(5) {
 
     private data class Point(val x: Int, val y: Int) {

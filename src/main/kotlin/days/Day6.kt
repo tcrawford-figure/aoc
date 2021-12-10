@@ -2,6 +2,9 @@ package days
 
 import java.math.BigInteger
 
+/**
+ * https://adventofcode.com/2021/day/6
+ */
 class Day6 : Day(6) {
 
     override fun partOne(): BigInteger = simulateFish(80)

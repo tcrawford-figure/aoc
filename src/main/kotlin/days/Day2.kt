@@ -1,5 +1,8 @@
 package days
 
+/**
+ * https://adventofcode.com/2021/day/2
+ */
 class Day2 : Day(2) {
 
     private val directionAndUnits = getDirectionAndUnits()

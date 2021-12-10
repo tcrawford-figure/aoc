@@ -3,6 +3,9 @@ package days
 import util.toDecimal
 import util.transpose
 
+/**
+ * https://adventofcode.com/2021/day/3
+ */
 class Day3 : Day(3) {
 
     private val mat2 = inputAsMatrix()

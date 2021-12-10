@@ -1,5 +1,8 @@
 package days
 
+/**
+ * https://adventofcode.com/2021/day/1
+ */
 class Day1 : Day(1) {
 
     override fun partOne() = inputList

@@ -2,6 +2,9 @@ package days
 
 import kotlin.math.absoluteValue
 
+/**
+ * https://adventofcode.com/2021/day/7
+ */
 class Day7 : Day(7) {
 
     private val crabSubmarines: Map<Int, Int> = inputString.split(",").map { it.toInt() }.groupingBy { it }.eachCount()

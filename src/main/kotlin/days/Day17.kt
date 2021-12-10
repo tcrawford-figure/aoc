@@ -1,9 +1,9 @@
 package days
 
 /**
- * https://adventofcode.com/2021/day/4
+ * https://adventofcode.com/2021/day/17
  */
-class Day4 : Day(4) {
+class Day17 : Day(17) {
 
     override fun partOne(): Any {
         return -1
