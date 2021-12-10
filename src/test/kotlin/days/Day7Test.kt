@@ -15,7 +15,7 @@ class Day7Test {
 
     @Test
     fun testPartTwo() {
-        assertThat(day.partTwo(), `is`(-1))
+        assertThat(day.partTwo(), `is`(168))
     }
 
 }
